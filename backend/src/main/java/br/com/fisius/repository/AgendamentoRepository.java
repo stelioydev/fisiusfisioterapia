@@ -1,0 +1,1 @@
+package br.com.fisius.repository;import br.com.fisius.entity.Agendamento;import org.springframework.data.jpa.repository.JpaRepository;public interface AgendamentoRepository extends JpaRepository<Agendamento,Long>{}

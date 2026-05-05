@@ -1,0 +1,1 @@
+package br.com.fisius.repository;import br.com.fisius.entity.Avaliacao;import org.springframework.data.jpa.repository.JpaRepository;public interface AvaliacaoRepository extends JpaRepository<Avaliacao,Long>{}

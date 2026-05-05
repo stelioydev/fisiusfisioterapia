@@ -1,0 +1,1 @@
+package br.com.fisius.repository;import br.com.fisius.entity.Prontuario;import org.springframework.data.jpa.repository.JpaRepository;public interface ProntuarioRepository extends JpaRepository<Prontuario,Long>{}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo | Fisius</title>
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+  <!-- Barra lateral do painel administrativo -->
+  <aside class="sidebar">
+    <div class="brand-admin">
+      <img src="../assets/img/logo-fisius-transparente.png" alt="Logo Fisius">
+      <small>Painel Premium</small>
+    </div>
+    <nav>
+      <a href="#dashboard">📊 Dashboard</a>
+      <a href="#agenda">📅 Agenda</a>
+      <a href="#pacientes">👥 Pacientes</a>
+      <a href="#prontuarios">📋 Prontuários</a>
+      <a href="#financeiro">💰 Financeiro</a>
+      <a href="#blog">📝 Blog</a>
+      <button id="logout" type="button">Sair</button>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <section id="dashboard" class="panel hero-panel">
+      <div>
+        <p class="eyebrow">Visão geral da clínica</p>
+        <h1>Olá, <span id="adminNome">Administradora</span> 👋</h1>
+        <p>Resumo rápido de agenda, pacientes e financeiro para gestão diária da Fisius.</p>
+      </div>
+      <div class="cards">
+        <div><span>Atendimentos</span><strong id="mAtend">0</strong></div>
+        <div><span>Recebido</span><strong id="mRecebido">R$ 0,00</strong></div>
+        <div><span>Pendente</span><strong id="mPendente">R$ 0,00</strong></div>
+        <div><span>Serviço forte</span><strong id="mServico">Pilates</strong></div>
+      </div>
+    </section>
+
+    <section id="agenda" class="panel">
+      <div class="panel-title">
+        <div><h2>Agenda inteligente</h2><p>Cadastrar, editar, excluir e alterar status dos atendimentos.</p></div>
+      </div>
+      <form id="agendaForm" class="inline-form">
+        <input type="hidden" name="id">
+        <input name="pacienteNome" placeholder="Paciente ou bloqueio" required>
+        <input name="data" type="date" required>
+        <input name="hora" type="time" required>
+        <select name="tipo"><option>FISIOTERAPIA</option><option>PILATES</option><option>ESTETICA</option><option>BLOQUEIO</option></select>
+        <select name="status"><option>AGENDADO</option><option>PRESENTE</option><option>FALTOU</option><option>DESMARCOU</option></select>
+        <input name="observacoes" placeholder="Observações">
+        <button id="agendaSubmit">Adicionar</button>
+        <button type="button" class="btn-light" onclick="cancelEdit('agendaForm','agendaSubmit','Adicionar')">Cancelar</button>
+      </form>
+      <div id="agendaLista" class="table"></div>
+    </section>
+
+    <section id="pacientes" class="panel">
+      <div class="panel-title">
+        <div><h2>Pacientes</h2><p>Cadastro com ações de editar e excluir.</p></div>
+      </div>
+      <form id="pacienteForm" class="inline-form">
+        <input type="hidden" name="id">
+        <input name="nome" placeholder="Nome" required>
+        <input name="telefone" placeholder="Telefone">
+        <input name="email" placeholder="E-mail">
+        <input name="dataNascimento" type="date">
+        <input name="convenio" placeholder="Convênio (ex: Wellhub)">
+        <input name="observacoes" placeholder="Observações">
+        <button id="pacienteSubmit">Cadastrar</button>
+        <button type="button" class="btn-light" onclick="cancelEdit('pacienteForm','pacienteSubmit','Cadastrar')">Cancelar</button>
+      </form>
+      <div id="pacienteLista" class="table"></div>
+    </section>
+
+    <section id="prontuarios" class="panel">
+      <div class="panel-title"><div><h2>Prontuário simplificado</h2><p>Registro rápido de evolução, observações e anexos por URL.</p></div></div>
+      <form id="prontuarioForm" class="inline-form prontuario-form">
+        <input name="pacienteId" placeholder="ID do paciente">
+        <select id="template">
+          <option value="Paciente evoluiu com melhora de mobilidade e redução do quadro álgico.">Evolução positiva</option>
+          <option value="Paciente relata dor ao movimento. Mantida conduta terapêutica e orientações domiciliares.">Dor ao movimento</option>
+          <option value="Sessão focada em fortalecimento, estabilidade e controle motor.">Fortalecimento</option>
+        </select>
+        <input name="anexoUrl" placeholder="URL de exame/laudo/imagem">
+        <textarea name="evolucao" placeholder="Evolução / observação do atendimento"></textarea>
+        <button>Salvar evolução</button>
+      </form>
+      <div id="prontuarioLista" class="table"></div>
+    </section>
+
+    <section id="financeiro" class="panel">
+      <div class="panel-title">
+        <div><h2>Financeiro direto ao ponto</h2><p>Entradas, saídas, pendências e relatório de impressão.</p></div>
+        <button class="btn-report" onclick="gerarRelatorioFinanceiro()">📄 Gerar relatório</button>
+      </div>
+      <form id="financeiroForm" class="inline-form">
+        <input name="descricao" placeholder="Descrição" required>
+        <input name="valor" type="number" step="0.01" placeholder="Valor" required>
+        <select name="tipo"><option>ENTRADA</option><option>SAIDA</option></select>
+        <select name="status"><option>PAGO</option><option>PENDENTE</option><option>CANCELADO</option></select>
+        <input name="data" type="date">
+        <button>Salvar</button>
+      </form>
+      <div id="financeiroLista" class="table"></div>
+    </section>
+
+    <section id="blog" class="panel">
+      <div class="panel-title"><div><h2>Blog</h2><p>Cadastre posts com imagem para o site público.</p></div></div>
+      <form id="blogForm" class="inline-form blog-form">
+        <input type="hidden" name="id">
+        <input name="titulo" placeholder="Título" required>
+        <input name="categoria" placeholder="Categoria">
+        <input name="imagemUrl" placeholder="URL da imagem do post">
+        <textarea name="conteudo" placeholder="Conteúdo"></textarea>
+        <button id="blogSubmit">Publicar</button>
+        <button type="button" class="btn-light" onclick="cancelEdit('blogForm','blogSubmit','Publicar')">Cancelar</button>
+      </form>
+      <div id="blogLista" class="table cards-list"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>

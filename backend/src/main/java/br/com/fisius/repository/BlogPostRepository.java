@@ -1,0 +1,1 @@
+package br.com.fisius.repository;import br.com.fisius.entity.BlogPost;import org.springframework.data.jpa.repository.JpaRepository;public interface BlogPostRepository extends JpaRepository<BlogPost,Long>{}
